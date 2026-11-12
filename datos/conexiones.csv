@@ -1,0 +1,12 @@
+p01,p02,4,15,habilitada
+p01,p03,6,20,habilitada
+p02,p03,3,9,habilitada
+p02,p04,12,30,habilitada
+p03,p04,8,22,habilitada
+p04,p05,7,20,habilitada
+p04,p08,5,12,habilitada
+p05,p06,4,13,habilitada
+p06,p08,3.5,12,habilitada
+p07,p04,10,28,habilitada
+p07,p08,12,29,habilitada
+p03,p06,9,25,cerrada

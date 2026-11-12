@@ -1,0 +1,6 @@
+m001,p01,p05,5,alta,pendiente,,,
+m002,p02,p06,4,media,pendiente,,,
+m003,p03,p04,10,alta,asignado,c01,2026-11-20,manana
+m004,p07,p01,9,baja,entregado,,2026-11-18,tarde
+m005,p04,p08,7,baja,entregado,,2026-11-19,manana
+m006,p01,p08,3,alta,pendiente,,,
