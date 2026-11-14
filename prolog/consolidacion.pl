@@ -4,6 +4,8 @@
 :- use_module(library(csv)).
 :- use_module(library(lists)).
 :- dynamic punto/4, conexion/5, camion/5, mudanza/9.
+% conectado/3 (4.3.2) se reutiliza del integrante 2 para no definirlo dos veces.
+:- ensure_loaded(integrante2).
 
 cargar_datos :-
     retractall(punto(_,_,_,_)),
@@ -44,10 +46,6 @@ cargar_mudanza(row(Id,O,D,V,P,E,C,Fecha,Franja)) :-
 
 valor_numero(N,N) :- number(N), !.
 valor_numero(A,N) :- atom(A), atom_number(A,N).
-
-conectado(A,B,Dist) :-
-    conexion(X,Y,Dist,_,habilitada),
-    (A=X,B=Y ; A=Y,B=X).
 
 camino_simple(A,A,_,0).
 camino_simple(A,B,Visitados,D) :-
