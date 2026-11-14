@@ -2,8 +2,8 @@
 #include "persistencia.hpp"
 #include <iostream>
 #include "integrante2.hpp"
+#include "integrante3.hpp"
 
-// Para ejecutar desde la raiz del proyecto: ./mudanzas
 int main() {
     const std::string carpeta = "datos";
     Datos datos;
@@ -13,7 +13,9 @@ int main() {
         return 1;
     }
     std::cout << "Carga inicial completada.\n";
-    FuncionesGrupo funciones;  // El grupo conectara aqui sus funciones.
+
     FuncionesGrupo funciones = crearFuncionesIntegrante2();
+    conectarFuncionesIntegrante3(funciones);
+
     ejecutarMenu(datos, carpeta, funciones);
 }
