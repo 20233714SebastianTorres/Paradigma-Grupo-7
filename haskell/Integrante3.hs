@@ -2,6 +2,8 @@ module Integrante3
   ( vecinos
   , rutasPosibles
   , costoRuta
+  , distanciaYTiempoRuta
+  , rutaMasCorta
   , CotizacionCamion(..)
   , cotizarServicio
   ) where

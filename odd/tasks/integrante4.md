@@ -27,12 +27,12 @@ Rama: `feat/integrante4` | Entrega: un PR hacia `main` | Pruebas: `runghc` (Hask
 
 | ID | Specs | Ruta | Estado | Evidencia |
 |---|---|---|---|---|
-| T1 | S7 | inline | pendiente | |
-| T2 | S3-S5 | inline | pendiente | |
-| T3 | S6 (Prolog) | inline | pendiente | |
-| T4 | S1-S2 | inline | pendiente | |
-| T5 | S6 (Haskell) | inline | pendiente | |
-| T6 | S7 | inline | pendiente | |
+| T1 | S7 | inline | hecho | d5cba81; consolidacion sin cambios vs L3, sin warning |
+| T2 | S3-S5 | inline | hecho | 166168e; RED (modulo inexistente) -> GREEN plunit |
+| T3 | S6 (Prolog) | inline | hecho | 166168e; 19/19 plunit |
+| T4 | S1-S2 | inline | hecho | RED (modulo inexistente) -> GREEN 16/16 |
+| T5 | S6 (Haskell) | inline | hecho | 16/16; ghc -Wall sin warnings |
+| T6 | S7 | inline | hecho | Main.hs: primeras 4 lineas iguales a L3; README_Integrante4.md |
 
 Ruta inline: ninguna unidad supera ~150 líneas ni hay unidades paralelas independientes que justifiquen un writer.
 
@@ -41,3 +41,6 @@ Ruta inline: ninguna unidad supera ~150 líneas ni hay unidades paralelas indepe
 - L1 (2026-11-14, usuario): "Quiero que hagas el discovery. Ahorita ya está hecho tanto el estudio 1 como la edición 3 y me falta a mí lo que sería el estudio 4. [...] Usa las buenas prácticas de ODE para poder llegar a un buen código y que sea fácil de explicar en la explicación también."
 - L2 (2026-11-14, usuario): "arranca"
 - L3 Línea base: `Main.hs` imprime "Ahorro: S/ 60.00"; `consolidable(c02,L)` -> [m001,m002], [m001,m006], [m002,m006]; `mejor_consolidacion` -> [m002,m006]-60.0; 22 hechos `conectado/3`.
+- L4 Prolog: los primeros fixtures de plunit modificaban hechos en el modulo del test, no en user; se movieron a helpers en user.
+- L5 Decision: no se crea prolog/main.pl; integrante4.pl ya carga consolidacion.pl e integrante2.pl.
+- L6 Pendiente fuera de alcance: C++ no compila sin #include <cmath> (integrante 3); falta 'Unidad con mas pedidos' en 4.1.7; choque/3 cuenta pedidos entregados (integrante 2).
