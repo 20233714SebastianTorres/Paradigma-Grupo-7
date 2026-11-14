@@ -1,6 +1,7 @@
 #include "menu.hpp"
 #include "persistencia.hpp"
 #include <iostream>
+#include "integrante2.hpp"
 
 // Para ejecutar desde la raiz del proyecto: ./mudanzas
 int main() {
@@ -13,5 +14,6 @@ int main() {
     }
     std::cout << "Carga inicial completada.\n";
     FuncionesGrupo funciones;  // El grupo conectara aqui sus funciones.
+    FuncionesGrupo funciones = crearFuncionesIntegrante2();
     ejecutarMenu(datos, carpeta, funciones);
 }
