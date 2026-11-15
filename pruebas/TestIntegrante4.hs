@@ -6,6 +6,7 @@ module Main where
 import Tipos
 import LecturaCSV (leerDatos)
 import Integrante4
+import Integrante3 (distanciaYTiempoRuta, rutasPosibles)
 import Data.List (find)
 import System.Exit (exitFailure)
 
@@ -31,6 +32,9 @@ main = do
                                              ["p01","p03","p04","p08","p06","p05"] datos
       impacto a b = impactoCierre a b "c02" datos
       afectados = either (const []) (map pedidoAfectado)
+      -- p01-p04 (14 km) empata con p01-p03-p04 (6 + 8 km)
+      datosEmpate = datos { conexiones = conexiones datos ++ [Conexion "p01" "p04" 14 40 "habilitada"] }
+      datosDuplicado = datos { conexiones = conexiones datos ++ [Conexion "p03" "p02" 1 3 "habilitada"] }
       conexionDe a b d = find (\c -> origenConexion c == a && destinoConexion c == b) (conexiones d)
   resultados <- sequence
     -- 4.2.6 Reporte de pedidos
@@ -86,6 +90,16 @@ main = do
         (esLeft (impacto "p01" "p07"))
     , prueba "FA tramo ya cerrado devuelve error"
         (esLeft (impacto "p03" "p06"))
+    -- FA: con rutas empatadas, solo se afecta si el cierre alarga la ruta
+    , prueba "FA cierre sin aumento de distancia (ruta empatada) no afecta a nadie"
+        (afectados (impactoCierre "p01" "p03" "c02" datosEmpate) == [])
+    , prueba "FA cierre p04-p05 sigue afectando a m001 con rutas empatadas"
+        (afectados (impactoCierre "p04" "p05" "c02" datosEmpate) == ["m001"])
+    -- Integrante 3: tramo registrado dos veces (en sentido inverso)
+    , prueba "4.2.5 con un tramo duplicado se usa la distancia menor"
+        (fmap fst (distanciaYTiempoRuta ["p02","p03"] (conexiones datosDuplicado)) == Right 1)
+    , prueba "4.2.4 con un tramo duplicado no se repiten rutas"
+        (length (rutasPosibles "p02" "p06" (conexiones datosDuplicado)) == 9)
     ]
   let fallas = length (filter not resultados)
   if fallas == 0

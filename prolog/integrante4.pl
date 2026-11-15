@@ -89,7 +89,9 @@ alternativa(_, _, _, _, sin_alternativa).
 
 % analizar_cierre(+A, +B, -Resultado)
 % Resultado: lista de afectado(Pedido, RutaOriginal, KmOriginal, Alternativa)
-% para cada pedido pendiente cuya ruta mas corta pasa por el tramo A-B.
+% para cada pedido pendiente cuya ruta mas corta pasa por el tramo A-B y que,
+% con el cierre, queda sin ruta o con una ruta mas larga (si hay otra ruta
+% igual de corta, el pedido no se considera afectado).
 % Falla si el tramo no existe o ya esta cerrado.
 analizar_cierre(A, B, Resultado) :-
     once(conectado(A, B, _)),
@@ -97,5 +99,11 @@ analizar_cierre(A, B, Resultado) :-
             ( mudanza(Pedido, Origen, Destino, _, _, pendiente, _, _, _),
               ruta_mas_corta(ninguno, Origen, Destino, Ruta, Km),
               usa_tramo(Ruta, A, B),
-              alternativa(A, B, Origen, Destino, Alternativa) ),
+              alternativa(A, B, Origen, Destino, Alternativa),
+              empeora(Km, Alternativa) ),
             Resultado).
+
+% El cierre empeora el traslado: no hay alternativa o es mas larga.
+empeora(_, sin_alternativa).
+empeora(Km, alternativa(_, KmAlt)) :-
+    KmAlt > Km + 1.0e-9.

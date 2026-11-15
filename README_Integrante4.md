@@ -20,7 +20,7 @@ Se reutiliza el trabajo del grupo sin duplicarlo: `cargar_datos/0` (lectura de l
 
 Simula el cierre de un tramo y muestra qué pedidos pendientes se ven afectados, cuál es su ruta alternativa y cuánto aumentan la distancia, el tiempo y el costo. **Los datos originales no se modifican.**
 
-- Un pedido está **afectado** si su ruta más corta actual pasa por el tramo cerrado.
+- Un pedido está **afectado** si su ruta más corta actual pasa por el tramo cerrado y, con el cierre, queda sin ruta o con una ruta más larga. Si existe otra ruta igual de corta (empate), el cierre no lo afecta.
 - **Prolog** (`analizar_cierre/3`): el tramo cerrado se pasa como parámetro (`sin_tramo(A, B)`) a la regla que recorre la red. No se usa `assert` ni `retract`, así que la base de conocimiento queda intacta. El backtracking encuentra todas las rutas alternativas y se elige la más corta.
 - **Haskell** (`impactoCierre`): `simularCierre` devuelve una **copia** de los datos con el tramo cerrado. Como los datos son inmutables, el original nunca cambia. `compararCostoRutas` calcula las diferencias.
 - Si el tramo no existe o ya está cerrado: Prolog falla y Haskell devuelve `Left` con el motivo.
@@ -81,6 +81,6 @@ Resultado = [afectado(m001, [p01,p03,p04,p05], 21,
 ## Pruebas
 
 ```bash
-runghc -ihaskell pruebas/TestIntegrante4.hs          # 16 pruebas
-swipl -g run_tests -t halt pruebas/test_integrante4.pl  # 19 pruebas (plunit)
+runghc -ihaskell pruebas/TestIntegrante4.hs          # 20 pruebas
+swipl -g run_tests -t halt pruebas/test_integrante4.pl  # 21 pruebas (plunit)
 ```
