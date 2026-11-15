@@ -21,14 +21,14 @@ Requiere g++ 17, GHC/RunHaskell y SWI-Prolog instalados.
 Linux/macOS:
 
 ```bash
-g++ -std=c++17 -I cpp/include cpp/src/main.cpp cpp/src/menu.cpp cpp/src/persistencia.cpp -o mudanzas
+g++ -std=c++17 -I cpp/include cpp/src/*.cpp -o mudanzas
 ./mudanzas
 ```
 
 Windows (MinGW):
 
 ```powershell
-g++ -std=c++17 -I cpp/include cpp/src/main.cpp cpp/src/menu.cpp cpp/src/persistencia.cpp -o mudanzas.exe
+g++ -std=c++17 -I cpp/include cpp/src/main.cpp cpp/src/menu.cpp cpp/src/persistencia.cpp cpp/src/integrante2.cpp cpp/src/integrante3.cpp -o mudanzas.exe
 .\mudanzas.exe
 ```
 
@@ -101,7 +101,14 @@ g++ -std=c++17 -I cpp/include pruebas/test_persistencia.cpp cpp/src/persistencia
 ./prueba_csv
 ```
 
-Esta prueba comprueba cantidad de registros, guardado y relectura de fecha/franja. Para validar los demas modulos, ejecutarlos con GHC y SWI-Prolog instalados.
+Esta prueba comprueba cantidad de registros, guardado y relectura de fecha/franja.
+
+Validaciones de registro (4.1.3), gestion de estados (4.1.4) y reporte general (4.1.7):
+
+```bash
+g++ -std=c++17 -I cpp/include pruebas/test_validaciones.cpp cpp/src/integrante2.cpp cpp/src/integrante3.cpp -o prueba_validaciones
+./prueba_validaciones
+``` Para validar los demas modulos, ejecutarlos con GHC y SWI-Prolog instalados.
 
 ## Fecha del proyecto
 
