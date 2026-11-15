@@ -1,6 +1,6 @@
 # Proyecto G7 - Integrante 4
 
-**Autor:** Andre Sebastian Torres Hurtado
+**Autor:** Walter Melendez
 **Escenario:** Planificador de servicios de mudanza en Lima Metropolitana.
 
 ## Lo implementado

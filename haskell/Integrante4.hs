@@ -1,4 +1,4 @@
--- Integrante 4: Andre Sebastian Torres Hurtado
+-- Integrante 4: Walter Melendez
 -- Funcionalidades base 4.2.6 (reporte de pedidos), 4.2.7 (resultado esperado)
 -- y funcionalidad adicional "Simulacion de cierres viales".
 module Integrante4
@@ -102,7 +102,7 @@ resumenPedido codPedido codCamion datos = do
     ]
 
 -- ---------------------------------------------------------------------------
--- FA - Autor: Andre Sebastian Torres Hurtado
+-- FA - Autor: Walter Melendez
 -- Simulacion de cierres viales y evaluacion del impacto en las mudanzas.
 -- Como los datos en Haskell son inmutables, simular un cierre es crear una
 -- copia modificada: los datos originales nunca cambian.

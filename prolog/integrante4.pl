@@ -1,4 +1,4 @@
-% Integrante 4: Andre Sebastian Torres Hurtado
+% Integrante 4: Walter Melendez
 % Funcionalidades base 4.3.4, 4.3.5, 4.3.6 y funcionalidad adicional
 % "Simulacion de cierres viales y evaluacion del impacto en las mudanzas".
 %
@@ -46,7 +46,7 @@ pedidos_inaccesibles(Pedidos) :-
               \+ alcanzable(Origen, Destino) ),
             Pedidos).
 
-% FA - Autor: Andre Sebastian Torres Hurtado
+% FA - Autor: Walter Melendez
 % Simulacion de cierres viales y evaluacion del impacto en las mudanzas.
 % El cierre se simula pasando el tramo como parametro (sin_tramo/1): la base
 % de conocimiento no se modifica (no hay assert ni retract).
