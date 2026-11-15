@@ -8,7 +8,9 @@ namespace {
 int pedirOpcion() {
     std::cout << "Seleccione una opcion: ";
     std::string linea, extra;
-    if (!std::getline(std::cin, linea)) return 0;
+    do {
+        if (!std::getline(std::cin, linea)) return 0;
+    } while (linea.empty());
     std::istringstream entrada(linea);
     int opcion;
     if (!(entrada >> opcion) || (entrada >> extra)) return -1;

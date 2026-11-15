@@ -1,5 +1,6 @@
 #include "integrante3.hpp"
 #include <algorithm>
+#include <cmath>
 #include <iomanip>
 #include <iostream>
 #include <limits>
