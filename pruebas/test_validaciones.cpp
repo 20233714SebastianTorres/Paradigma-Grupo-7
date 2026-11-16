@@ -128,6 +128,10 @@ int main() {
         prueba("agenda valida guarda fecha y franja (previous behavior)",
                ejecutar(f.agendarMudanza, d, "m01 2026-11-20 10:00-12:00\n") &&
                d.mudanzas[0].fecha == "2026-11-20" && d.mudanzas[0].franja == "10:00-12:00");
+        prueba("agenda con franja nombrada del CSV se acepta",
+               ejecutar(f.agendarMudanza, d, "m02 2026-11-21 tarde\n") && d.mudanzas[1].franja == "tarde");
+        prueba("agenda con franja nombrada desconocida se rechaza",
+               !ejecutar(f.agendarMudanza, d, "m02 2026-11-21 madrugada\n") && d.mudanzas[1].franja == "tarde");
         prueba("agenda de mudanza inexistente se rechaza (previous behavior)",
                !ejecutar(f.agendarMudanza, d, "m99\n"));
     }

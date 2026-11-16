@@ -314,8 +314,10 @@ int minutosDelDia(const string& s, size_t desde) {
     return h * 60 + m;
 }
 
-// Checks a time slot in HH:MM-HH:MM format where the start is before the end.
+// Checks a time slot: a named slot used in the shared CSV (manana, tarde, noche)
+// or HH:MM-HH:MM where the start is before the end.
 bool franjaValida(const string& f) {
+    if (f == "manana" || f == "tarde" || f == "noche") return true;
     if (f.size() != 11 || f[5] != '-') return false;
     int inicio = minutosDelDia(f, 0), fin = minutosDelDia(f, 6);
     return inicio >= 0 && fin >= 0 && inicio < fin;
@@ -343,10 +345,10 @@ bool agendarMudanza(Datos& datos) {
                 return false;
             }
 
-            cout << "Nueva Franja horaria (sin espacios, ej: 10:00-12:00): ";
+            cout << "Nueva Franja horaria (manana/tarde/noche o HH:MM-HH:MM): ";
             cin >> franja;
             if (!franjaValida(franja)) {
-                cout << "Error: franja no valida (" << franja << "), use HH:MM-HH:MM." << endl;
+                cout << "Error: franja no valida (" << franja << "), use manana/tarde/noche o HH:MM-HH:MM." << endl;
                 return false;
             }
 
