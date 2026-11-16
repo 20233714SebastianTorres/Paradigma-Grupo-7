@@ -109,6 +109,29 @@ int main() {
                d.mudanzas[1].estado == "entregado" && d.camiones[0].estado == "disponible");
     }
 
+    // --- additional feature (integrante 2): schedule ---
+    {
+        Datos d = base();
+        prueba("agenda con fecha inexistente se rechaza",
+               !ejecutar(f.agendarMudanza, d, "m01 2026-02-30 10:00-12:00\n") && d.mudanzas[0].fecha.empty());
+        prueba("agenda con fecha mal formada se rechaza",
+               !ejecutar(f.agendarMudanza, d, "m01 15/11/2026 10:00-12:00\n") && d.mudanzas[0].fecha.empty());
+        prueba("agenda con franja invertida se rechaza",
+               !ejecutar(f.agendarMudanza, d, "m01 2026-11-20 12:00-10:00\n") && d.mudanzas[0].franja.empty());
+        prueba("agenda con hora invalida se rechaza",
+               !ejecutar(f.agendarMudanza, d, "m01 2026-11-20 25:00-26:00\n") && d.mudanzas[0].franja.empty());
+        d.mudanzas[2].estado = "entregado";
+        prueba("agenda de una mudanza entregada se rechaza",
+               !ejecutar(f.agendarMudanza, d, "m03 2026-11-20 10:00-12:00\n") && d.mudanzas[2].fecha.empty());
+        prueba("agenda en 29 de febrero de un bisiesto se acepta",
+               ejecutar(f.agendarMudanza, d, "m02 2028-02-29 08:00-09:30\n") && d.mudanzas[1].fecha == "2028-02-29");
+        prueba("agenda valida guarda fecha y franja (previous behavior)",
+               ejecutar(f.agendarMudanza, d, "m01 2026-11-20 10:00-12:00\n") &&
+               d.mudanzas[0].fecha == "2026-11-20" && d.mudanzas[0].franja == "10:00-12:00");
+        prueba("agenda de mudanza inexistente se rechaza (previous behavior)",
+               !ejecutar(f.agendarMudanza, d, "m99\n"));
+    }
+
     // --- 4.1.7 general report ---
     {
         Datos d = base();
