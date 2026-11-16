@@ -1,4 +1,5 @@
 % FA - Integrante 1: funcionalidad adicional "Consolidacion de mudanzas pequenas".
+% FA - Autor: Andre Sebastian Torres Hurtado
 % SWI-Prolog: cargar_datos. consolidable(c02, L).
 % Se usan los mismos 4 archivos CSV que el resto del grupo.
 :- use_module(library(csv)).

@@ -66,6 +66,7 @@ costoRuta ruta camion cs = do
   (dist, _) <- distanciaYTiempoRuta ruta cs
   return (dist * tarifaKm camion)
 
+-- FA - Autor: Nehemias Falcon
 -- FA: Cotizacion comparativa y recomendacion de camion
 data CotizacionCamion = CotizacionCamion
   { camionCotizado      :: String -- codigo del camion
