@@ -1,4 +1,5 @@
 % FA - Integrante 1: funcionalidad adicional "Consolidacion de mudanzas pequenas".
+% FA - Autor: Andre Sebastian Torres Hurtado
 % SWI-Prolog: cargar_datos. consolidable(c02, L).
 % Se usan los mismos 4 archivos CSV que el resto del grupo.
 :- use_module(library(csv)).
@@ -123,8 +124,10 @@ km_separados([Id|Ids],Total) :-
     distancia_minima(Origen,Destino,Dist),
     km_separados(Ids,Resto), Total is Dist+Resto.
 
+% El grupo debe caber en el camion, igual que en consolidable/2.
 ahorro_grupo(Camion,Ids,Ahorro) :-
-    camion(Camion,_,_,Tarifa,disponible),
+    camion(Camion,_,Capacidad,Tarifa,disponible),
+    volumen_total(Ids,Volumen), Volumen =< Capacidad,
     km_separados(Ids,PorSeparado),
     km_consolidados(Ids,Juntos),
     Ahorro is (PorSeparado-Juntos)*Tarifa.

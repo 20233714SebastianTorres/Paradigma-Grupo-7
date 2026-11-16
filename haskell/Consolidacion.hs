@@ -1,4 +1,5 @@
 -- FA - Integrante 1: funcionalidad adicional (Haskell).
+-- FA - Autor: Andre Sebastian Torres Hurtado
 -- Consolida mudanzas pendientes de una misma zona y calcula el ahorro.
 module Consolidacion (ResumenAhorro(..), ahorroConsolidacion) where
 

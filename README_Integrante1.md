@@ -21,18 +21,18 @@ Requiere g++ 17, GHC/RunHaskell y SWI-Prolog instalados.
 Linux/macOS:
 
 ```bash
-g++ -std=c++17 -I cpp/include cpp/src/main.cpp cpp/src/menu.cpp cpp/src/persistencia.cpp -o mudanzas
+g++ -std=c++17 -I cpp/include cpp/src/*.cpp -o mudanzas
 ./mudanzas
 ```
 
 Windows (MinGW):
 
 ```powershell
-g++ -std=c++17 -I cpp/include cpp/src/main.cpp cpp/src/menu.cpp cpp/src/persistencia.cpp -o mudanzas.exe
+g++ -std=c++17 -I cpp/include cpp/src/main.cpp cpp/src/menu.cpp cpp/src/persistencia.cpp cpp/src/integrante2.cpp cpp/src/integrante3.cpp -o mudanzas.exe
 .\mudanzas.exe
 ```
 
-En el menu, pulse **17** para verificar los CSV cargados, **15** para recargar y **16** para guardar. Las opciones 1-14 muestran 'Pendiente de integrar' hasta que los compañeros conecten sus funciones (no se atribuyen sus entregables al integrante 1).
+En el menu, pulse **17** para verificar los CSV cargados, **15** para recargar y **16** para guardar. Las opciones 1-14 ejecutan las funciones de los integrantes 2 y 3, conectadas en `main.cpp` (no se atribuyen sus entregables al integrante 1).
 
 ### Haskell
 
@@ -101,7 +101,22 @@ g++ -std=c++17 -I cpp/include pruebas/test_persistencia.cpp cpp/src/persistencia
 ./prueba_csv
 ```
 
-Esta prueba comprueba cantidad de registros, guardado y relectura de fecha/franja. Para validar los demas modulos, ejecutarlos con GHC y SWI-Prolog instalados.
+Esta prueba comprueba cantidad de registros, guardado y relectura de fecha/franja.
+
+Validaciones de registro (4.1.3), gestion de estados (4.1.4), agenda (fecha y franja) y reporte general (4.1.7):
+
+```bash
+g++ -std=c++17 -I cpp/include pruebas/test_validaciones.cpp cpp/src/integrante2.cpp cpp/src/integrante3.cpp -o prueba_validaciones
+./prueba_validaciones
+```
+
+Consolidacion (integrante 1) y agenda (integrante 2) en Prolog:
+
+```bash
+swipl -g run_tests -t halt pruebas/test_consolidacion_agenda.pl
+```
+
+Para validar los demas modulos, ejecutarlos con GHC y SWI-Prolog instalados.
 
 ## Fecha del proyecto
 

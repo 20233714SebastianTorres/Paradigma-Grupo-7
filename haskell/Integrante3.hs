@@ -9,7 +9,7 @@ module Integrante3
   ) where
 
 import Tipos
-import Data.List (find, sortBy)
+import Data.List (find, nub, sortBy)
 import Data.Ord (comparing)
 
 -- 4.2.3 Funcion de vecinos
@@ -34,7 +34,8 @@ rutasPosibles origen destino cs = buscarRutas [origen] origen
       | actual == destino = [[actual]]
       | otherwise =
           [ actual : resto
-          | (vec, _, _) <- vecinos actual cs
+          -- nub: si un tramo se registro dos veces, la ruta no se repite
+          | vec <- nub [v | (v, _, _) <- vecinos actual cs]
           , vec `notElem` visitados
           , resto <- buscarRutas (vec : visitados) vec
           ]
@@ -42,6 +43,7 @@ rutasPosibles origen destino cs = buscarRutas [origen] origen
 -- 4.2.5 Costo de una ruta
 -- Dada una ruta (lista de puntos), calcula la distancia y tiempo total.
 -- Si algun tramo no existe o esta cerrado, devuelve Left con el detalle.
+-- Si un tramo esta registrado dos veces, se usa el de menor distancia.
 distanciaYTiempoRuta :: [String] -> [Conexion] -> Either String (Double, Int)
 distanciaYTiempoRuta [] _ = Right (0.0, 0)
 distanciaYTiempoRuta [_] _ = Right (0.0, 0)
@@ -51,11 +53,12 @@ distanciaYTiempoRuta (a:b:resto) cs = do
   return (d + dResto, t + tResto)
   where
     buscarTramo x y conexionesLista =
-      case find (\c -> estadoConexion c == "habilitada" &&
-                       ((origenConexion c == x && destinoConexion c == y) ||
-                        (origenConexion c == y && destinoConexion c == x))) conexionesLista of
-        Just c  -> Right (distanciaKm c, tiempoMin c)
-        Nothing -> Left ("El tramo " ++ x ++ " -> " ++ y ++ " no existe o esta cerrado.")
+      case [ (distanciaKm c, tiempoMin c)
+           | c <- conexionesLista
+           , estadoConexion c == "habilitada"
+           , (origenConexion c, destinoConexion c) `elem` [(x, y), (y, x)] ] of
+        []     -> Left ("El tramo " ++ x ++ " -> " ++ y ++ " no existe o esta cerrado.")
+        tramos -> Right (minimum tramos)
 
 -- Costo de la ruta para un camion dado: distancia * tarifaKm
 costoRuta :: [String] -> Camion -> [Conexion] -> Either String Double
@@ -63,6 +66,7 @@ costoRuta ruta camion cs = do
   (dist, _) <- distanciaYTiempoRuta ruta cs
   return (dist * tarifaKm camion)
 
+-- FA - Autor: Nehemias Falcon
 -- FA: Cotizacion comparativa y recomendacion de camion
 data CotizacionCamion = CotizacionCamion
   { camionCotizado      :: String -- codigo del camion
@@ -85,11 +89,12 @@ distanciaRutaSimple :: [String] -> [Conexion] -> Double
 distanciaRutaSimple [] _ = 0.0
 distanciaRutaSimple [_] _ = 0.0
 distanciaRutaSimple (a:b:resto) cs =
-  let d = case find (\c -> estadoConexion c == "habilitada" &&
-                           ((origenConexion c == a && destinoConexion c == b) ||
-                            (origenConexion c == b && destinoConexion c == a))) cs of
-            Just c  -> distanciaKm c
-            Nothing -> 999999.0
+  let d = case [ distanciaKm c
+               | c <- cs
+               , estadoConexion c == "habilitada"
+               , (origenConexion c, destinoConexion c) `elem` [(a, b), (b, a)] ] of
+            []  -> 999999.0
+            kms -> minimum kms
   in d + distanciaRutaSimple (b:resto) cs
 
 -- Encuentra la ruta mas corta entre todas las posibles

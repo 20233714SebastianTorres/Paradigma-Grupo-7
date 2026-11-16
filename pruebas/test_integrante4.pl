@@ -13,6 +13,10 @@ cerrar_tramo(A, B) :-
 agregar_pedido_grande :-
     assertz(mudanza(mtest, p01, p02, 15, alta, pendiente, '', '', '')).
 
+% p01-p04 (14 km) empata con la ruta p01-p03-p04 (6 + 8 km).
+agregar_tramo_empate :-
+    assertz(conexion(p01, p04, 14, 40, habilitada)).
+
 quitar_pedido_grande :-
     retractall(mudanza(mtest, _, _, _, _, _, _, _, _)).
 
@@ -112,5 +116,14 @@ test(tramo_inexistente_falla, [fail]) :-
 
 test(tramo_ya_cerrado_falla, [fail]) :-
     analizar_cierre(p03, p06, _).
+
+test(ruta_empatada_sin_aumento_no_afecta,
+     [ setup(agregar_tramo_empate), cleanup(cargar_datos), true(R == []) ]) :-
+    analizar_cierre(p01, p03, R).
+
+test(ruta_empatada_con_aumento_si_afecta,
+     [ setup(agregar_tramo_empate), cleanup(cargar_datos), true(Ids == [m001]) ]) :-
+    analizar_cierre(p04, p05, R),
+    findall(Id, member(afectado(Id, _, _, _), R), Ids).
 
 :- end_tests(analizar_cierre).

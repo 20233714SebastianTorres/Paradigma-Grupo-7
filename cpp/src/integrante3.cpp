@@ -1,8 +1,10 @@
 #include "integrante3.hpp"
 #include <algorithm>
+#include <cmath>
 #include <iomanip>
 #include <iostream>
 #include <limits>
+#include <map>
 #include <string>
 #include <vector>
 
@@ -249,6 +251,21 @@ bool reporteGeneral(Datos& datos) {
     cout << fixed << setprecision(1);
     cout << "  Carga en transito: " << cargaEnTransito << " m3" << endl;
 
+    // Unidad con mas pedidos asignados (4.1.7)
+    map<string, int> pedidosPorCamion;
+    for (const auto& m : datos.mudanzas)
+        if (!m.camionAsignado.empty()) ++pedidosPorCamion[m.camionAsignado];
+    if (pedidosPorCamion.empty()) {
+        cout << "  Unidad con mas pedidos: ninguna" << endl;
+    } else {
+        auto top = max_element(pedidosPorCamion.begin(), pedidosPorCamion.end(),
+            [](const pair<const string, int>& a, const pair<const string, int>& b) {
+                return a.second < b.second;
+            });
+        cout << "  Unidad con mas pedidos: " << top->first
+             << " (" << top->second << " pedidos)" << endl;
+    }
+
     if (!pendientesAlta.empty()) {
         cout << "\n--- PENDIENTES DE PRIORIDAD ALTA ---" << endl;
         for (const auto& cod : pendientesAlta)
@@ -259,6 +276,7 @@ bool reporteGeneral(Datos& datos) {
     return false;
 }
 
+// FA - Autor: Nehemias Falcon
 // FA — cotizarMudanza
 bool cotizarMudanza(Datos& datos) {
     string codMudanza;

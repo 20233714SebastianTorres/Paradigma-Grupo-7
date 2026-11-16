@@ -165,12 +165,14 @@ data ImpactoCierre = ImpactoCierre
   , alternativa    :: Maybe ComparacionRutas
   } deriving (Show, Eq)
 
--- Pedidos pendientes cuya ruta mas corta pasa por el tramo a-b.
+-- Pedidos pendientes cuya ruta mas corta pasa por el tramo a-b y que, con el
+-- cierre, quedan sin ruta o con una ruta mas larga. Si existe otra ruta igual
+-- de corta (empate), el cierre no los afecta.
 impactoCierre :: String -> String -> String -> Datos -> Either String [ImpactoCierre]
 impactoCierre a b codCamion datos
   | not (any (\c -> esTramo a b c && estadoConexion c == "habilitada") (conexiones datos)) =
       Left ("El tramo " ++ a ++ " - " ++ b ++ " no existe o ya esta cerrado.")
-  | otherwise = mapM evaluar afectados
+  | otherwise = filter empeora <$> mapM evaluar afectados
   where
     cs = conexiones datos
     csCerrado = conexiones (simularCierre a b datos)
@@ -180,6 +182,7 @@ impactoCierre a b codCamion datos
       , Just (ruta, _) <- [rutaMasCorta (origenMudanza m) (destinoMudanza m) cs]
       , usaTramo a b ruta
       ]
+    empeora i = maybe True (\c -> incrementoKm c > 1e-9) (alternativa i)
     evaluar (m, ruta) =
       case rutaMasCorta (origenMudanza m) (destinoMudanza m) csCerrado of
         Nothing       -> Right (ImpactoCierre (codigoMudanza m) ruta Nothing)
