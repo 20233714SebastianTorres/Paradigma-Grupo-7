@@ -123,8 +123,10 @@ km_separados([Id|Ids],Total) :-
     distancia_minima(Origen,Destino,Dist),
     km_separados(Ids,Resto), Total is Dist+Resto.
 
+% El grupo debe caber en el camion, igual que en consolidable/2.
 ahorro_grupo(Camion,Ids,Ahorro) :-
-    camion(Camion,_,_,Tarifa,disponible),
+    camion(Camion,_,Capacidad,Tarifa,disponible),
+    volumen_total(Ids,Volumen), Volumen =< Capacidad,
     km_separados(Ids,PorSeparado),
     km_consolidados(Ids,Juntos),
     Ahorro is (PorSeparado-Juntos)*Tarifa.

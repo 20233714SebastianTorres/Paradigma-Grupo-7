@@ -24,8 +24,10 @@ alcanzable_aux(A, B, Visitados) :-
 
 % FA Autor: Rado Delgado Jean Carlo de Jesus
 % Agenda de servicios: detecta choques de horario y verifica disponibilidad.
+% Una mudanza ya entregada no ocupa al camion.
 choque(Camion, Fecha, Franja) :-
-    mudanza(_, _, _, _, _, _, Camion, Fecha, Franja),
+    mudanza(_, _, _, _, _, Estado, Camion, Fecha, Franja),
+    Estado \= entregado,
     Fecha \= '',
     Franja \= ''.
 
