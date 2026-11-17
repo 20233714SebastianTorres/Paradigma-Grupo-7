@@ -9,11 +9,10 @@
 |---|---|---|
 | 4.1.3 Registro con validaciones | C++ | `registrarPunto`, `registrarConexion`, `registrarCamion`, `registrarMudanza` en `cpp/src/integrante2.cpp` |
 | 4.1.4 Gestión de estados | C++ | `gestionarConexion`, `asignarMudanza`, `entregarMudanza` en `cpp/src/integrante2.cpp` |
+| 4.3.1 Lectura de CSV | Prolog | `cargar_datos/0` (lectura con `csv_read_file` y `assertz`) | 
 | 4.3.2 Conexión directa | Prolog | `conectado/3` en `prolog/integrante2.pl` |
 | 4.3.3 Alcanzabilidad | Prolog | `alcanzable/2`, `alcanzable_aux/3` en `prolog/integrante2.pl` |
 | **FA** Agenda de servicios | C++ + Prolog | Opción 13 en el menú de c++; `choque/3`, `camion_libre/3` en `prolog/integrante2.pl` |
-
-Se reutiliza el trabajo del grupo sin duplicarlo: estructuras de datos y persistencia del integrante 1 en C++; lectura de los CSV (`cargar_datos/0`) del consolidado en Prolog.
 
 ## Funcionalidad adicional: agenda de servicios
 
